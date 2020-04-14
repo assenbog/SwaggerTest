@@ -4,6 +4,8 @@ namespace SwaggerTest
 {
     public class WeatherForecast
     {
+        public Location ForecastLocation { get; set; }
+
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }
