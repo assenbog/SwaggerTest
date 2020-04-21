@@ -5,47 +5,49 @@
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+    using SwaggerTest.Repositories;
 
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<WeatherForecastController> _logger;
-        private List<WeatherForecast> _weatherForecasts;
+        private WeatherForecastRepository _weatherForecastRepository;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-            _weatherForecasts = Initialise();
+            _weatherForecastRepository = new WeatherForecastRepository();
         }
 
         [HttpGet]
         public List<WeatherForecast> Get()
         {
-            return _weatherForecasts;
+            return _weatherForecastRepository.WeatherForecasts;
         }
 
         [HttpGet("{id}")]
         public WeatherForecast Get(int index)
         {
-            return _weatherForecasts[index];
+            return _weatherForecastRepository.WeatherForecasts[index];
+        }
+
+        [HttpGet("{location}/forecasts")]
+        public List<WeatherForecast> Get(string location)
+        {
+            return _weatherForecastRepository.WeatherForecasts.Where(p => p.ForecastLocation.Code.Equals(location, StringComparison.InvariantCultureIgnoreCase)).ToList();
         }
 
         [HttpGet("{day}/{month}/{year}")]
         public WeatherForecast Get(int day, int month, int year)
         {
-            return _weatherForecasts.FirstOrDefault(p => p.Date == new DateTime(year, month, day));
+            return _weatherForecastRepository.WeatherForecasts.FirstOrDefault(p => p.Date == new DateTime(year, month, day));
         }
 
         [HttpDelete("{id}")]
         public void Delete(int index)
         {
-            _weatherForecasts.RemoveAt(index);
+            _weatherForecastRepository.WeatherForecasts.RemoveAt(index);
         }
 
         [HttpPost("{day}/{month}/{year}/{tempC}/{weatherType}")]
@@ -58,7 +60,7 @@
                 Summary = weatherType
             };
 
-            _weatherForecasts.Add(forecast);
+            _weatherForecastRepository.WeatherForecasts.Add(forecast);
 
             return forecast;
         }
@@ -66,7 +68,7 @@
         [HttpPost]
         public WeatherForecast Create(WeatherForecast forecast)
         {
-            _weatherForecasts.Add(forecast);
+            _weatherForecastRepository.WeatherForecasts.Add(forecast);
 
             return forecast;
         }
@@ -74,33 +76,10 @@
         [HttpPut("{day}/{month}/{year}/{tempC}/{weatherType}")]
         public void Update(int day, int month, int year, int tempC, string weatherType)
         {
-            var forecast = _weatherForecasts.FirstOrDefault(p => p.Date == new DateTime(year, month, day));
+            var forecast = _weatherForecastRepository.WeatherForecasts.FirstOrDefault(p => p.Date == new DateTime(year, month, day));
 
             forecast.TemperatureC = tempC;
             forecast.Summary = weatherType;
         }
-
-        #region Private Methods
-
-        private List<WeatherForecast> Initialise()
-        {
-            var rng = new Random();
-            var forecasts = new List<WeatherForecast>() {new WeatherForecast
-            {
-                Date = DateTime.Now.Date,
-                TemperatureC = 22,
-                Summary = Summaries[6]
-            } };
-            forecasts.AddRange(Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.Date.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            }));
-
-            return forecasts;
-        }
-
-        #endregion Private Methods
     }
 }
