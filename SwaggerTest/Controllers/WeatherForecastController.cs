@@ -32,10 +32,16 @@
             return _weatherForecastRepository.WeatherForecasts[index];
         }
 
-        [HttpGet("{location}/forecasts")]
+        [HttpGet("{location}/locationforecasts")]
         public List<WeatherForecast> Get(string location)
         {
             return _weatherForecastRepository.WeatherForecasts.Where(p => p.ForecastLocation.Code.Equals(location, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        }
+
+        [HttpGet("{date:datetime}/dateforecasts")]
+        public List<WeatherForecast> Get(DateTime date)
+        {
+            return _weatherForecastRepository.WeatherForecasts.Where(p => p.Date == date.Date).ToList();
         }
 
         [HttpGet("{day}/{month}/{year}")]

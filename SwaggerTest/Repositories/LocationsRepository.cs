@@ -18,7 +18,7 @@
             return new List<Location>
             {
                 new Location { Code = "Lon", City = "London", Country = "U.K." },
-                new Location { Code = "Lon", City = "London", Country = "U.K." },
+                new Location { Code = "Lis", City = "Lisbon", Country = "Portugal" },
                 new Location { Code = "Rom", City = "Rome", Country = "Italy" },
                 new Location { Code = "Mad", City = "Madrid", Country = "Spain" },
                 new Location { Code = "Ber", City = "Berlin", Country = "Germany" },

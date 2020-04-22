@@ -26,7 +26,7 @@
 
             var now = DateTime.Now.Date;
 
-            var sevenDays = new List<DateTime> { now, now.AddDays(1), now.AddDays(2), now.AddDays(3), now.AddDays(4), now.AddDays(5), now.AddDays(6) };
+            var sevenDays = new List<DateTime> { now.Date, now.AddDays(1), now.AddDays(2), now.AddDays(3), now.AddDays(4), now.AddDays(5), now.AddDays(6) };
 
             Locations = new LocationsRepository().Locations;
 
