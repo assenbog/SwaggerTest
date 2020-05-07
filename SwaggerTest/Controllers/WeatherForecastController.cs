@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.AspNet.OData;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using SwaggerTest.Repositories;
@@ -21,6 +22,7 @@
         }
 
         [HttpGet]
+        [EnableQuery]
         public List<WeatherForecast> Get()
         {
             return _weatherForecastRepository.WeatherForecasts;

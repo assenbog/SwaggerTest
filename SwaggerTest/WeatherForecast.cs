@@ -1,7 +1,7 @@
-using System;
-
 namespace SwaggerTest
 {
+    using System;
+
     public class WeatherForecast
     {
         public Location ForecastLocation { get; set; }
