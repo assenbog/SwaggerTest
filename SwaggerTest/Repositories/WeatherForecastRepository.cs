@@ -36,10 +36,11 @@
 
             foreach (var location in Locations)
             {
+                var id = 0;
                 foreach(var day in sevenDays)
                 {
                     var summaryIndex = rng.Next(0, 6);
-                    forecasts.Add(new WeatherForecast { Date = day, ForecastLocation = location, TemperatureC = summaries.Keys.ToArray()[summaryIndex], Summary = summaries.Values.ToArray()[summaryIndex] });
+                    forecasts.Add(new WeatherForecast { ID = id++, Date = day, ForecastLocation = location, TemperatureC = summaries.Keys.ToArray()[summaryIndex], Summary = summaries.Values.ToArray()[summaryIndex] });
                 }
             }
 

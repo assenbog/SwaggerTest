@@ -1,9 +1,13 @@
 namespace SwaggerTest
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class WeatherForecast
     {
+        [Key]
+        public int ID { get; set; }
+
         public Location ForecastLocation { get; set; }
 
         public DateTime Date { get; set; }

@@ -80,6 +80,7 @@ namespace SwaggerTest
             var odataBuilder = new ODataConventionModelBuilder();
 
             odataBuilder.EntitySet<WeatherForecast>("WeatherForecasts");
+            odataBuilder.EntitySet<Location>("Locations");
 
             return odataBuilder.GetEdmModel();
         }
